@@ -6,8 +6,10 @@ import { environment } from './environments/environment';
 
 import Amplify from 'aws-amplify';
 import amplify from './aws-exports';
+//import { Storage } from 'aws-amplify'
 
 Amplify.configure(amplify);
+//Storage.configure({ level: 'private' });
 
 if (environment.production) {
   enableProdMode();

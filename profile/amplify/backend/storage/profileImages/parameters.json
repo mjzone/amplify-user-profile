@@ -1,0 +1,13 @@
+{
+    "bucketName": "profile-images-buckert",
+    "authPolicyName": "s3_amplify_5da85502",
+    "unauthPolicyName": "s3_amplify_5da85502",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authPermissions": "rw",
+    "unauthPermissions": ""
+}

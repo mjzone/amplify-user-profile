@@ -7,8 +7,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Hello {{userName}}!</a>
+        </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#"> Logout <span class="sr-only">(current)</span></a>
+          <a class="nav-link" (click)="logOut()"> Logout <span class="sr-only">(current)</span></a>
         </li>
       </ul>
     </div>
@@ -18,12 +21,22 @@
 <main class="text-center my-5">
   <div class="container">
     <h2>My Profile</h2>
+    <div class="form-group row">
+      <div class="col-sm-12">
+        <div class="md-form mt-0">
+          <mdb-icon *ngIf="showPhoto" fas icon="upload" (click)="editPhoto()" size="2x" class="upload-icon"></mdb-icon>
+          <amplify-s3-image [path]="user.imageUrl" [options]="{'level': 'private'}" *ngIf="showPhoto"></amplify-s3-image>
+          <amplify-photo-picker *ngIf="!showPhoto" path="image" [storageOptions]="{'level': 'private'}" (uploaded)="onImageUploaded($event)">
+          </amplify-photo-picker>
+        </div>
+      </div>
+    </div>
     <form>
       <div class="form-group row">
         <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
           <div class="md-form mt-0">
-            <input type="text" class="form-control" id="firstName" placeholder="First Name">
+            <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName">
           </div>
         </div>
       </div>
@@ -32,7 +45,7 @@
         <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
           <div class="md-form mt-0">
-            <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+            <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName">
           </div>
         </div>
       </div>
@@ -41,25 +54,15 @@
         <label for="aboutMe" class="col-sm-2 col-form-label">About Me</label>
         <div class="col-sm-10">
           <div class="md-form mt-0">
-            <textarea id="aboutMe" placeholder="About Me" class="form-control md-textarea" length="120"
+            <textarea id="aboutMe" name="aboutMe" [(ngModel)]="user.aboutMe" class="form-control md-textarea" length="120"
               rows="3"></textarea>
           </div>
         </div>
       </div>
 
       <div class="form-group row">
-          <label for="inputPassword3MD" class="col-sm-2 col-form-label">Profile Photo</label>
-          <div class="col-sm-10">
-            <div class="md-form mt-0">
-                <amplify-photo-picker (loaded)="onImagePreviewLoaded($event)" (picked)="onImageSelected($event)">
-                  </amplify-photo-picker>
-            </div>
-          </div>
-        </div>
-
-      <div class="form-group row">
         <div class="col-sm-3">
-          <button type="submit" class="btn btn-primary btn-lg">Update</button>
+          <button type="submit" class="btn btn-primary btn-lg" (click)="updateProfile()">Update</button>
         </div>
       </div>
     </form>
